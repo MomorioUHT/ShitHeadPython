@@ -32,21 +32,42 @@ tens = {
     }
 
 try:
-    number = input()
-    if int(number) >= 1000 or int(number) < 0 or number == "-0": raise Exception
+    number = str(input())
+    minus = False
+    if int(number) >= 1000 or int(number) <= -1000: raise Exception
     else:
-        number = int(number)
+        if number.startswith("-"): 
+            minus = True
+            number = int(number[1::])
+        else: number = int(number)
+        
         if number == 0: print("zero")
-        elif number < 20: print(unique[number])
+        
+        elif number < 20: 
+            if minus: print(f"negative-{unique[number]}")
+            else: print(unique[number])
         elif number < 100:
-            if number%10 == 0: print(tens[number//10])    
-            else: print(tens[number//10]+"-"+unique[number%10])
+            if number%10 == 0: 
+                if minus: print(f"negative-{tens[number//10]}")
+                else: print(tens[number//10])   
+            else: 
+                if minus: print(f"negative-{tens[number//10]}-{unique[number%10]}")
+                else: print({tens[number//10]}-{unique[number%10]}) 
         elif number < 1000:
-            if number%100 == 0: print(unique[number//100]+"-hundred")
+            if number%100 == 0: 
+                if minus: print(f"negative-{unique[number//100]}-hundred")
+                else: print(f"{unique[number//100]}-hundred") 
             else:
                 twolastdigit = number%100
-                if twolastdigit < 20: print(unique[number//100]+"-hundred-"+unique[twolastdigit])
+                if twolastdigit < 20: 
+                    if minus: print(f"negative-{unique[number//100]}-hundred-{unique[twolastdigit]}")
+                    else: print(f"{unique[number//100]}-hundred-{unique[twolastdigit]}") 
+                    
                 elif twolastdigit < 100:
-                    if twolastdigit%10 == 0: print(unique[number//100]+"-hundred-"+tens[twolastdigit//10])
-                    else: print(unique[number//100]+"-hundred-"+tens[twolastdigit//10]+"-"+unique[twolastdigit%10])
+                    if twolastdigit%10 == 0: 
+                        if minus: print(f"negative-{unique[number//100]}-hundred-{tens[twolastdigit//10]}")
+                        else: print(f"{unique[number//100]}-hundred-{tens[twolastdigit//10]}") 
+                    else: 
+                        if minus: print(f"negative-{unique[number//100]}-hundred-{tens[twolastdigit//10]}-{unique[twolastdigit%10]}")
+                        else: print(f"{unique[number//100]}-hundred-{tens[twolastdigit//10]}-{unique[twolastdigit%10]}") 
 except: print("ERROR")
